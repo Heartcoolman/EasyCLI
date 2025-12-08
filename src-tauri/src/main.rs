@@ -1465,6 +1465,7 @@ fn callback_path_for(provider: &str) -> &'static str {
         "codex" => "/codex/callback",
         "google" => "/google/callback",
         "iflow" => "/iflow/callback",
+        "antigravity" => "/antigravity/callback",
         _ => "/callback",
     }
 }

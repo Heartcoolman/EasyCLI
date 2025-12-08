@@ -5,17 +5,48 @@ let antigravityAuthState = null;
 let antigravityPollingInterval = null;
 let antigravityAbortController = null;
 let antigravityPollingActive = false;
+let antigravityLocalServerStarted = false;
 
 async function startAntigravityAuthFlow() {
     try {
         console.log('Starting Antigravity authentication flow...');
+        await startAntigravityLocalServer();
         await getAntigravityAuthUrl();
         showAntigravityAuthDialog();
     } catch (error) {
         console.error('Error starting Antigravity auth flow:', error);
         const msg = (error && (error.message || String(error))) || 'Unknown error';
         showError('Failed to start Antigravity authentication flow: ' + msg);
+        if (antigravityLocalServerStarted) {
+            await stopAntigravityLocalServer();
+        }
     }
+}
+
+async function startAntigravityLocalServer() {
+    const currentMode = localStorage.getItem('type') || 'local';
+    let localPort = null, baseUrl = null;
+    if (currentMode === 'local') {
+        const config = await configManager.getConfig();
+        localPort = config.port || 8317;
+    } else {
+        configManager.refreshConnection();
+        baseUrl = configManager.baseUrl;
+        if (!baseUrl) throw new Error('Missing base-url configuration');
+    }
+    await window.__TAURI__.core.invoke('start_callback_server', {
+        provider: 'antigravity',
+        listenPort: 51121,
+        mode: currentMode,
+        baseUrl: baseUrl,
+        localPort: localPort
+    });
+    antigravityLocalServerStarted = true;
+}
+
+async function stopAntigravityLocalServer() {
+    try { await window.__TAURI__.core.invoke('stop_callback_server', { listenPort: 51121 }); } catch (_) { }
+    antigravityLocalServerStarted = false;
 }
 
 async function getAntigravityAuthUrl() {
@@ -150,7 +181,7 @@ async function startAntigravityAuthPolling() {
     }
 }
 
-function cancelAntigravityAuth() {
+async function cancelAntigravityAuth() {
     try {
         antigravityPollingActive = false;
         document.removeEventListener('keydown', handleAntigravityEscapeKey);
@@ -169,6 +200,9 @@ function cancelAntigravityAuth() {
 
         antigravityAuthUrl = null;
         antigravityAuthState = null;
+        if (antigravityLocalServerStarted) {
+            await stopAntigravityLocalServer();
+        }
     } catch (error) {
         console.error('Error canceling Antigravity auth:', error);
     }
