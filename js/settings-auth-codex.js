@@ -18,7 +18,7 @@ async function startCodexAuthFlow() {
     } catch (error) {
         console.error('Error starting Codex auth flow:', error);
         const msg = (error && (error.message || String(error))) || 'Unknown error';
-        showError('Failed to start Codex authentication flow: ' + msg);
+        showError('启动 Codex 认证流程失败：' + msg);
         if (codexLocalServer) {
             await stopCodexLocalServer();
         }
@@ -72,7 +72,7 @@ async function handleCodexCallback(req, res) {
         console.log('Redirecting to:', redirectUrl);
         res.writeHead(302, { 'Location': redirectUrl });
         res.end();
-        setTimeout(async () => { await stopCodexLocalServer(); showSuccessMessage('Codex authentication completed!'); }, 1000);
+        setTimeout(async () => { await stopCodexLocalServer(); showSuccessMessage('Codex 认证完成！'); }, 1000);
     } catch (error) {
         console.error('Error handling Codex callback:', error);
         res.writeHead(500, { 'Content-Type': 'text/plain' });
@@ -123,23 +123,23 @@ function showCodexAuthDialog() {
     modal.innerHTML = `
         <div class="modal-content">
             <div class="modal-header">
-                <h3 class="modal-title">Codex Authentication</h3>
+                <h3 class="modal-title">Codex 认证</h3>
                 <button class="modal-close" id="codex-modal-close">&times;</button>
             </div>
             <div class="modal-body">
                 <div class="codex-auth-content">
-                    <p>Please copy the link below and open it in your browser, or click the "Open Link" button directly:</p>
+                    <p>请复制以下链接并在浏览器中打开，或直接点击"打开链接"按钮：</p>
                     <div class="auth-url-container">
                         <input type="text" id="codex-auth-url-input" class="form-input" value="${codexAuthUrl}" readonly>
-                        <button type="button" id="codex-copy-btn" class="copy-btn">Copy Link</button>
+                        <button type="button" id="codex-copy-btn" class="copy-btn">复制链接</button>
                     </div>
                     <div class="auth-status" id="codex-auth-status" style="display: none;">
-                        <div class="auth-status-text">Waiting for authentication to complete...</div>
+                        <div class="auth-status-text">等待认证完成...</div>
                         <div class="auth-status-spinner"></div>
                     </div>
                     <div class="auth-actions">
-                        <button type="button" id="codex-open-btn" class="btn-primary">Open Link</button>
-                        <button type="button" id="codex-cancel-btn" class="btn-cancel">Cancel</button>
+                        <button type="button" id="codex-open-btn" class="btn-primary">打开链接</button>
+                        <button type="button" id="codex-cancel-btn" class="btn-cancel">取消</button>
                     </div>
                 </div>
             </div>
@@ -159,22 +159,22 @@ function showCodexAuthDialog() {
 }
 
 async function copyCodexUrl() {
-    try { await navigator.clipboard.writeText(codexAuthUrl); showSuccessMessage('Link copied to clipboard'); }
-    catch (error) { console.error('Error copying Codex URL:', error); showError('Failed to copy link: ' + error.message); }
+    try { await navigator.clipboard.writeText(codexAuthUrl); showSuccessMessage('链接已复制到剪贴板'); }
+    catch (error) { console.error('Error copying Codex URL:', error); showError('复制链接失败：' + error.message); }
 }
 
 function openCodexUrl() {
     try {
         if (window.__TAURI__?.shell?.open) { window.__TAURI__.shell.open(codexAuthUrl); }
         else { window.open(codexAuthUrl, '_blank'); }
-        showSuccessMessage('Authentication link opened in browser');
+        showSuccessMessage('认证链接已在浏览器中打开');
 
         // Show polling status
         const statusDiv = document.getElementById('codex-auth-status');
         if (statusDiv) {
             statusDiv.style.display = 'block';
         }
-    } catch (error) { console.error('Error opening Codex URL:', error); showError('Failed to open link: ' + error.message); }
+    } catch (error) { console.error('Error opening Codex URL:', error); showError('打开链接失败：' + error.message); }
 }
 
 // Start Codex authentication status polling
@@ -191,7 +191,7 @@ async function startCodexAuthPolling() {
             () => {
                 // Authentication successful
                 console.log('Codex Authentication successful');
-                showSuccessMessage('Codex authentication completed!');
+                showSuccessMessage('Codex 认证完成！');
                 cancelCodexAuth();
                 // Refresh auth files list
                 if (typeof loadAuthFiles === 'function') {
@@ -201,13 +201,13 @@ async function startCodexAuthPolling() {
             (error) => {
                 // Authentication failed
                 console.error('Codex Authentication failed:', error);
-                showError('Codex Authentication failed: ' + error);
+                showError('Codex 认证失败：' + error);
                 cancelCodexAuth();
             }
         );
     } catch (error) {
         console.error('Codex Authentication polling error:', error);
-        showError('Error occurred during Codex Authentication: ' + error.message);
+        showError('Codex 认证过程中出错：' + error.message);
         cancelCodexAuth();
     }
 }
@@ -336,7 +336,7 @@ async function pollCodexAuthStatus(authType, state, onSuccess, onError) {
                 codexAbortController.abort();
                 codexAbortController = null;
             }
-            onError('Authentication timeout, please try again');
+            onError('认证超时，请重试');
             reject(new Error('Authentication timeout'));
         }, 300000);
     });

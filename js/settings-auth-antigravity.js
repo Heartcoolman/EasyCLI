@@ -16,7 +16,7 @@ async function startAntigravityAuthFlow() {
     } catch (error) {
         console.error('Error starting Antigravity auth flow:', error);
         const msg = (error && (error.message || String(error))) || 'Unknown error';
-        showError('Failed to start Antigravity authentication flow: ' + msg);
+        showError('启动 Antigravity 认证流程失败：' + msg);
         if (antigravityLocalServerStarted) {
             await stopAntigravityLocalServer();
         }
@@ -94,23 +94,23 @@ function showAntigravityAuthDialog() {
     modal.innerHTML = `
         <div class="modal-content">
             <div class="modal-header">
-                <h3 class="modal-title">Antigravity Authentication</h3>
+                <h3 class="modal-title">Antigravity 认证</h3>
                 <button class="modal-close" id="antigravity-auth-modal-close">&times;</button>
             </div>
             <div class="modal-body">
                 <div class="codex-auth-content">
-                    <p>Please copy the link below and open it in your browser to complete Antigravity authentication:</p>
+                    <p>请复制以下链接并在浏览器中打开以完成 Antigravity 认证：</p>
                     <div class="auth-url-container">
                         <input type="text" id="antigravity-auth-url-input" class="form-input" value="${antigravityAuthUrl}" readonly>
-                        <button type="button" id="antigravity-copy-btn" class="copy-btn">Copy Link</button>
+                        <button type="button" id="antigravity-copy-btn" class="copy-btn">复制链接</button>
                     </div>
                     <div class="auth-status" id="antigravity-auth-status" style="display: none;">
-                        <div class="auth-status-text">Waiting for authentication to complete...</div>
+                        <div class="auth-status-text">等待认证完成...</div>
                         <div class="auth-status-spinner"></div>
                     </div>
                     <div class="auth-actions">
-                        <button type="button" id="antigravity-open-btn" class="btn-primary">Open Link</button>
-                        <button type="button" id="antigravity-cancel-btn" class="btn-cancel">Cancel</button>
+                        <button type="button" id="antigravity-open-btn" class="btn-primary">打开链接</button>
+                        <button type="button" id="antigravity-cancel-btn" class="btn-cancel">取消</button>
                     </div>
                 </div>
             </div>
@@ -129,22 +129,22 @@ function showAntigravityAuthDialog() {
 }
 
 async function copyAntigravityUrl() {
-    try { await navigator.clipboard.writeText(antigravityAuthUrl); showSuccessMessage('Link copied to clipboard'); }
-    catch (error) { console.error('Error copying Antigravity URL:', error); showError('Failed to copy link: ' + error.message); }
+    try { await navigator.clipboard.writeText(antigravityAuthUrl); showSuccessMessage('链接已复制到剪贴板'); }
+    catch (error) { console.error('Error copying Antigravity URL:', error); showError('复制链接失败：' + error.message); }
 }
 
 function openAntigravityUrl() {
     try {
         if (window.__TAURI__?.shell?.open) { window.__TAURI__.shell.open(antigravityAuthUrl); }
         else { window.open(antigravityAuthUrl, '_blank'); }
-        showSuccessMessage('Authentication link opened in browser');
+        showSuccessMessage('认证链接已在浏览器中打开');
 
         // Show polling status
         const statusDiv = document.getElementById('antigravity-auth-status');
         if (statusDiv) {
             statusDiv.style.display = 'block';
         }
-    } catch (error) { console.error('Error opening Antigravity URL:', error); showError('Failed to open link: ' + error.message); }
+    } catch (error) { console.error('Error opening Antigravity URL:', error); showError('打开链接失败：' + error.message); }
 }
 
 // Start Antigravity authentication status polling
@@ -162,7 +162,7 @@ async function startAntigravityAuthPolling() {
             antigravityAuthState,
             () => {
                 console.log('Antigravity Authentication successful');
-                showSuccessMessage('Antigravity authentication completed!');
+                showSuccessMessage('Antigravity 认证完成！');
                 cancelAntigravityAuth();
                 if (typeof loadAuthFiles === 'function') {
                     loadAuthFiles();
@@ -170,13 +170,13 @@ async function startAntigravityAuthPolling() {
             },
             (error) => {
                 console.error('Antigravity Authentication failed:', error);
-                showError('Antigravity Authentication failed: ' + error);
+                showError('Antigravity 认证失败：' + error);
                 cancelAntigravityAuth();
             }
         );
     } catch (error) {
         console.error('Antigravity Authentication polling error:', error);
-        showError('Error occurred during Antigravity Authentication: ' + error.message);
+        showError('Antigravity 认证过程中出错：' + error.message);
         cancelAntigravityAuth();
     }
 }
@@ -301,7 +301,7 @@ async function pollAntigravityAuthStatus(authType, state, onSuccess, onError) {
                 antigravityAbortController.abort();
                 antigravityAbortController = null;
             }
-            onError('Authentication timeout, please try again');
+            onError('认证超时，请重试');
             reject(new Error('Authentication timeout'));
         }, 300000);
     });

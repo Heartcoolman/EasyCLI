@@ -20,7 +20,7 @@ async function startClaudeAuthFlow() {
     } catch (error) {
         console.error('Error starting Claude auth flow:', error);
         const msg = (error && (error.message || String(error))) || 'Unknown error';
-        showError('Failed to start Claude Code authentication flow: ' + msg);
+        showError('启动 Claude Code 认证流程失败：' + msg);
         if (claudeLocalServer) {
             await stopClaudeLocalServer();
         }
@@ -74,7 +74,7 @@ async function handleClaudeCallback(req, res) {
         console.log('Redirecting to:', redirectUrl);
         res.writeHead(302, { 'Location': redirectUrl });
         res.end();
-        setTimeout(async () => { await stopClaudeLocalServer(); showSuccessMessage('Claude Code authentication completed!'); }, 1000);
+        setTimeout(async () => { await stopClaudeLocalServer(); showSuccessMessage('Claude Code 认证完成！'); }, 1000);
     } catch (error) {
         console.error('Error handling Claude callback:', error);
         res.writeHead(500, { 'Content-Type': 'text/plain' });
@@ -125,23 +125,23 @@ function showClaudeAuthDialog() {
     modal.innerHTML = `
         <div class="modal-content">
             <div class="modal-header">
-                <h3 class="modal-title">Claude Code Authentication</h3>
+                <h3 class="modal-title">Claude Code 认证</h3>
                 <button class="modal-close" id="claude-modal-close">&times;</button>
             </div>
             <div class="modal-body">
                 <div class="codex-auth-content">
-                    <p>Please copy the link below and open it in your browser, or click the "Open Link" button directly:</p>
+                    <p>请复制以下链接并在浏览器中打开，或直接点击"打开链接"按钮：</p>
                     <div class="auth-url-container">
                         <input type="text" id="claude-auth-url-input" class="form-input" value="${claudeAuthUrl}" readonly>
-                        <button type="button" id="copy-claude-url-btn" class="copy-btn">Copy Link</button>
+                        <button type="button" id="copy-claude-url-btn" class="copy-btn">复制链接</button>
                     </div>
                     <div class="auth-status" id="claude-auth-status" style="display: none;">
-                        <div class="auth-status-text">Waiting for authentication to complete...</div>
+                        <div class="auth-status-text">等待认证完成...</div>
                         <div class="auth-status-spinner"></div>
                     </div>
                     <div class="auth-actions">
-                        <button type="button" id="open-claude-url-btn" class="btn-primary">Open Link</button>
-                        <button type="button" id="cancel-claude-btn" class="btn-cancel">Cancel</button>
+                        <button type="button" id="open-claude-url-btn" class="btn-primary">打开链接</button>
+                        <button type="button" id="cancel-claude-btn" class="btn-cancel">取消</button>
                     </div>
                 </div>
             </div>
@@ -159,22 +159,22 @@ function showClaudeAuthDialog() {
 }
 
 async function copyClaudeUrl() {
-    try { const urlInput = document.getElementById('claude-auth-url-input'); await navigator.clipboard.writeText(urlInput.value); showSuccessMessage('Link copied to clipboard'); }
-    catch (error) { console.error('Error copying URL:', error); showError('Failed to copy link'); }
+    try { const urlInput = document.getElementById('claude-auth-url-input'); await navigator.clipboard.writeText(urlInput.value); showSuccessMessage('链接已复制到剪贴板'); }
+    catch (error) { console.error('Error copying URL:', error); showError('复制链接失败'); }
 }
 
 function openClaudeUrl() {
     try {
         if (window.__TAURI__?.shell?.open) { window.__TAURI__.shell.open(claudeAuthUrl); }
         else { window.open(claudeAuthUrl, '_blank'); }
-        showSuccessMessage('Authentication link opened in browser');
+        showSuccessMessage('认证链接已在浏览器中打开');
 
         // Show polling status
         const statusDiv = document.getElementById('claude-auth-status');
         if (statusDiv) {
             statusDiv.style.display = 'block';
         }
-    } catch (error) { console.error('Error opening URL:', error); showError('Failed to open link'); }
+    } catch (error) { console.error('Error opening URL:', error); showError('打开链接失败'); }
 }
 
 // Start Claude authentication status polling
@@ -193,7 +193,7 @@ async function startClaudeAuthPolling() {
             () => {
                 // Authentication successful
                 console.log('Claude Code Authentication successful');
-                showSuccessMessage('Claude Code authentication completed!');
+                showSuccessMessage('Claude Code 认证完成！');
                 cancelClaudeAuth();
                 // Refresh auth files list
                 if (typeof loadAuthFiles === 'function') {
@@ -203,13 +203,13 @@ async function startClaudeAuthPolling() {
             (error) => {
                 // Authentication failed
                 console.error('Claude Code Authentication failed:', error);
-                showError('Claude Code Authentication failed: ' + error);
+                showError('Claude Code 认证失败：' + error);
                 cancelClaudeAuth();
             }
         );
     } catch (error) {
         console.error('Claude Code Authentication polling error:', error);
-        showError('Error occurred during Claude Code Authentication: ' + error.message);
+        showError('Claude Code 认证过程中出错：' + error.message);
         cancelClaudeAuth();
     }
 }
@@ -352,7 +352,7 @@ async function pollClaudeAuthStatus(authType, state, onSuccess, onError) {
                 claudeAbortController.abort();
                 claudeAbortController = null;
             }
-            onError('Authentication timeout, please try again');
+            onError('认证超时，请重试');
             reject(new Error('Authentication timeout'));
         }, 300000);
     });

@@ -40,7 +40,7 @@ async function loadAllApiKeys() {
         ]);
     } catch (error) {
         console.error('Error loading API keys:', error);
-        showError('Failed to load API keys');
+        showError('加载 API 密钥失败');
     }
 }
 
@@ -52,7 +52,7 @@ async function loadGeminiKeys() {
         renderGeminiKeys();
     } catch (error) {
         console.error('Error loading Gemini keys:', error);
-        showError('Failed to load Gemini API keys');
+        showError('加载 Gemini API 密钥失败');
         renderGeminiKeys();
     }
 }
@@ -65,7 +65,7 @@ async function loadCodexKeys() {
         renderCodexKeys();
     } catch (error) {
         console.error('Error loading Codex keys:', error);
-        showError('Failed to load Codex API keys');
+        showError('加载 Codex API 密钥失败');
         renderCodexKeys();
     }
 }
@@ -78,7 +78,7 @@ async function loadClaudeKeys() {
         renderClaudeKeys();
     } catch (error) {
         console.error('Error loading Claude keys:', error);
-        showError('Failed to load Claude API keys');
+        showError('加载 Claude API 密钥失败');
         renderClaudeKeys();
     }
 }
@@ -92,8 +92,8 @@ function renderGeminiKeys() {
         list.innerHTML = `
             <div class="empty-state">
                 <div class="empty-state-icon">🔑</div>
-                <div class="empty-state-text">No Gemini API Keys</div>
-                <div class="empty-state-subtitle">Add your first Gemini API key to get started</div>
+                <div class="empty-state-text">暂无 Gemini API 密钥</div>
+                <div class="empty-state-subtitle">添加您的第一个 Gemini API 密钥</div>
             </div>
         `;
         return;
@@ -109,14 +109,14 @@ function renderGeminiKeys() {
         keyItem.innerHTML = `
             <div class="api-key-info">
                 <div class="api-key-value">${keyObj['api-key'] || ''}</div>
-                ${baseUrl ? `<div class="api-key-base-url">Base URL: ${baseUrl}</div>` : ''}
-                ${proxyUrl ? `<div class="api-key-proxy-url">Proxy URL: ${proxyUrl}</div>` : ''}
-                ${excluded ? `<div class="api-key-excluded">Excluded: ${excluded}</div>` : ''}
-                ${headersText ? `<div class="api-key-headers">Headers: ${headersText}</div>` : ''}
+                ${baseUrl ? `<div class="api-key-base-url">基础地址：${baseUrl}</div>` : ''}
+                ${proxyUrl ? `<div class="api-key-proxy-url">代理地址：${proxyUrl}</div>` : ''}
+                ${excluded ? `<div class="api-key-excluded">排除：${excluded}</div>` : ''}
+                ${headersText ? `<div class="api-key-headers">请求头：${headersText}</div>` : ''}
             </div>
             <div class="api-key-actions">
-                <button class="api-key-btn edit" onclick="editGeminiKey(${index})">Edit</button>
-                <button class="api-key-btn delete" onclick="deleteGeminiKey(${index})">Delete</button>
+                <button class="api-key-btn edit" onclick="editGeminiKey(${index})">编辑</button>
+                <button class="api-key-btn delete" onclick="deleteGeminiKey(${index})">删除</button>
             </div>
         `;
         list.appendChild(keyItem);
@@ -132,8 +132,8 @@ function renderCodexKeys() {
         list.innerHTML = `
             <div class="empty-state">
                 <div class="empty-state-icon">🔑</div>
-                <div class="empty-state-text">No Codex API Keys</div>
-                <div class="empty-state-subtitle">Add your first Codex API key to get started</div>
+                <div class="empty-state-text">暂无 Codex API 密钥</div>
+                <div class="empty-state-subtitle">添加您的第一个 Codex API 密钥</div>
             </div>
         `;
         return;
@@ -149,14 +149,14 @@ function renderCodexKeys() {
         keyItem.innerHTML = `
             <div class="api-key-info">
                 <div class="api-key-value">${keyObj['api-key']}</div>
-                ${baseUrl ? `<div class=\"api-key-base-url\">Base URL: ${baseUrl}</div>` : ''}
-                ${proxyUrl ? `<div class=\"api-key-proxy-url\">Proxy URL: ${proxyUrl}</div>` : ''}
-                ${excluded ? `<div class=\"api-key-excluded\">Excluded: ${excluded}</div>` : ''}
-                ${headersText ? `<div class=\"api-key-headers\">Headers: ${headersText}</div>` : ''}
+                ${baseUrl ? `<div class=\"api-key-base-url\">基础地址：${baseUrl}</div>` : ''}
+                ${proxyUrl ? `<div class=\"api-key-proxy-url\">代理地址：${proxyUrl}</div>` : ''}
+                ${excluded ? `<div class=\"api-key-excluded\">排除：${excluded}</div>` : ''}
+                ${headersText ? `<div class=\"api-key-headers\">请求头：${headersText}</div>` : ''}
             </div>
             <div class="api-key-actions">
-                <button class="api-key-btn edit" onclick="editCodexKey(${index})">Edit</button>
-                <button class="api-key-btn delete" onclick="deleteCodexKey(${index})">Delete</button>
+                <button class="api-key-btn edit" onclick="editCodexKey(${index})">编辑</button>
+                <button class="api-key-btn delete" onclick="deleteCodexKey(${index})">删除</button>
             </div>
         `;
         list.appendChild(keyItem);
@@ -172,8 +172,8 @@ function renderClaudeKeys() {
         list.innerHTML = `
             <div class="empty-state">
                 <div class="empty-state-icon">🔑</div>
-                <div class="empty-state-text">No Claude API Keys</div>
-                <div class="empty-state-subtitle">Add your first Claude API key to get started</div>
+                <div class="empty-state-text">暂无 Claude API 密钥</div>
+                <div class="empty-state-subtitle">添加您的第一个 Claude API 密钥</div>
             </div>
         `;
         return;
@@ -189,14 +189,14 @@ function renderClaudeKeys() {
         keyItem.innerHTML = `
             <div class="api-key-info">
                 <div class="api-key-value">${keyObj['api-key']}</div>
-                ${baseUrl ? `<div class=\"api-key-base-url\">Base URL: ${baseUrl}</div>` : ''}
-                ${proxyUrl ? `<div class=\"api-key-proxy-url\">Proxy URL: ${proxyUrl}</div>` : ''}
-                ${excluded ? `<div class=\"api-key-excluded\">Excluded: ${excluded}</div>` : ''}
-                ${headersText ? `<div class=\"api-key-headers\">Headers: ${headersText}</div>` : ''}
+                ${baseUrl ? `<div class=\"api-key-base-url\">基础地址：${baseUrl}</div>` : ''}
+                ${proxyUrl ? `<div class=\"api-key-proxy-url\">代理地址：${proxyUrl}</div>` : ''}
+                ${excluded ? `<div class=\"api-key-excluded\">排除：${excluded}</div>` : ''}
+                ${headersText ? `<div class=\"api-key-headers\">请求头：${headersText}</div>` : ''}
             </div>
             <div class="api-key-actions">
-                <button class="api-key-btn edit" onclick="editClaudeKey(${index})">Edit</button>
-                <button class="api-key-btn delete" onclick="deleteClaudeKey(${index})">Delete</button>
+                <button class="api-key-btn edit" onclick="editClaudeKey(${index})">编辑</button>
+                <button class="api-key-btn delete" onclick="deleteClaudeKey(${index})">删除</button>
             </div>
         `;
         list.appendChild(keyItem);
@@ -207,7 +207,7 @@ function renderClaudeKeys() {
 function showApiKeyModal(type, editIndex = null) {
     currentApiType = type;
     currentEditIndex = editIndex;
-    modalTitle.textContent = editIndex !== null ? 'Edit API Key' : 'Add API Key';
+    modalTitle.textContent = editIndex !== null ? '编辑 API 密钥' : '添加 API 密钥';
     apiKeyInput.value = '';
     baseUrlInput.value = '';
     apiKeyProxyUrlInput.value = '';
@@ -281,7 +281,7 @@ function saveApiKey() {
 
     const currentTab = document.querySelector('.tab.active').getAttribute('data-tab');
     if (currentTab !== 'api') {
-        showError('Please switch to Third Party API Keys tab to manage keys');
+        showError('请切换到第三方 API 密钥标签页管理密钥');
         return;
     }
 
@@ -289,7 +289,7 @@ function saveApiKey() {
     if (!apiKey) {
         apiKeyInput.classList.add('error');
         apiKeyInput.focus();
-        showError('Please fill in this field');
+        showError('请填写此字段');
         hasErrors = true;
     }
 
@@ -297,7 +297,7 @@ function saveApiKey() {
         if (!baseUrl) {
             baseUrlInput.classList.add('error');
             baseUrlInput.focus();
-            showError('Please fill in this field');
+            showError('请填写此字段');
             hasErrors = true;
         }
     }
@@ -309,13 +309,13 @@ function saveApiKey() {
                 if (parsed === null || typeof parsed !== 'object' || Array.isArray(parsed)) {
                     headersInput.classList.add('error');
                     headersInput.focus();
-                    showError('Headers must be a JSON object');
+                    showError('请求头必须是 JSON 对象');
                     hasErrors = true;
                 }
             } catch (e) {
                 headersInput.classList.add('error');
                 headersInput.focus();
-                showError('Headers must be valid JSON');
+                showError('请求头必须是有效的 JSON');
                 hasErrors = true;
             }
         }
@@ -397,8 +397,8 @@ function editClaudeKey(index) { showApiKeyModal('claude', index); }
 
 function deleteGeminiKey(index) {
     showConfirmDialog(
-        'Confirm Delete',
-        'Are you sure you want to delete this Gemini API key? This action cannot be undone.',
+        '确认删除',
+        '确定要删除此 Gemini API 密钥吗？此操作不可撤销。',
         () => {
             geminiKeys.splice(index, 1);
             renderGeminiKeys();
@@ -408,8 +408,8 @@ function deleteGeminiKey(index) {
 
 function deleteCodexKey(index) {
     showConfirmDialog(
-        'Confirm Delete',
-        'Are you sure you want to delete this Codex API key? This action cannot be undone.',
+        '确认删除',
+        '确定要删除此 Codex API 密钥吗？此操作不可撤销。',
         () => {
             codexKeys.splice(index, 1);
             renderCodexKeys();
@@ -419,8 +419,8 @@ function deleteCodexKey(index) {
 
 function deleteClaudeKey(index) {
     showConfirmDialog(
-        'Confirm Delete',
-        'Are you sure you want to delete this Claude API key? This action cannot be undone.',
+        '确认删除',
+        '确定要删除此 Claude API 密钥吗？此操作不可撤销。',
         () => {
             claudeKeys.splice(index, 1);
             renderClaudeKeys();

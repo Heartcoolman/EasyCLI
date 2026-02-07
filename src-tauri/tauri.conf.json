@@ -30,7 +30,7 @@
       },
       {
         "label": "settings",
-        "title": "EasyCLI Control Panel",
+        "title": "EasyCLI 控制面板",
         "width": 930,
         "height": 600,
         "resizable": false,

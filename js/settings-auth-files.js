@@ -24,7 +24,7 @@ async function loadAuthFiles() {
         updateActionButtons();
     } catch (error) {
         console.error('Error loading auth files:', error);
-        showError('Network error');
+        showError('网络错误');
         showEmptyAuthFiles();
         updateActionButtons();
     }
@@ -50,9 +50,9 @@ function renderAuthFiles() {
             <div class="auth-file-info">
                 <div class="auth-file-name">${file.name}</div>
                 <div class="auth-file-details">
-                    <span class="auth-file-type">Type: ${file.type || 'unknown'}</span>
+                    <span class="auth-file-type">类型：${file.type || '未知'}</span>
                     <span class="auth-file-size">${fileSize}</span>
-                    <span>Modified: ${modTime}</span>
+                    <span>修改时间：${modTime}</span>
                 </div>
             </div>
         `;
@@ -68,8 +68,8 @@ function showEmptyAuthFiles() {
     authFilesList.innerHTML = `
         <div class="empty-state">
             <div class="empty-state-icon">📁</div>
-            <div class="empty-state-text">No authentication files</div>
-            <div class="empty-state-subtitle">Upload authentication files to manage them here</div>
+            <div class="empty-state-text">暂无认证文件</div>
+            <div class="empty-state-subtitle">上传认证文件以在此管理</div>
         </div>
     `;
     updateActionButtons();
@@ -99,7 +99,7 @@ function updateActionButtons() {
         deleteBtn.style.display = 'block';
         newDropdown.style.display = 'block';
         downloadBtn.style.display = 'block';
-        selectAllBtn.textContent = allSelected ? 'Unselect All' : 'Select All';
+        selectAllBtn.textContent = allSelected ? '取消全选' : '全选';
         deleteBtn.disabled = !hasSelection;
         downloadBtn.disabled = !hasSelection;
     } else if (currentTab === 'access-token' || currentTab === 'api' || currentTab === 'openai' || currentTab === 'basic') {
@@ -130,32 +130,32 @@ function toggleSelectAllAuthFiles() {
 async function deleteSelectedAuthFiles() {
     if (selectedAuthFiles.size === 0 || deleteBtn.disabled) return;
     const fileCount = selectedAuthFiles.size;
-    const fileText = fileCount === 1 ? 'file' : 'files';
+    const fileText = '个文件';
     showConfirmDialog(
-        'Confirm Delete',
-        `Are you sure you want to delete ${fileCount} authentication ${fileText}?\nThis action cannot be undone.`,
+        '确认删除',
+        `确定要删除 ${fileCount} 个认证文件吗？\n此操作不可撤销。`,
         async () => {
             deleteBtn.disabled = true;
-            deleteBtn.textContent = 'Deleting...';
+            deleteBtn.textContent = '删除中...';
             try {
                 const result = await configManager.deleteAuthFiles(Array.from(selectedAuthFiles));
                 if (result.success) {
-                    showSuccessMessage(`Deleted ${result.successCount} file(s) successfully`);
+                    showSuccessMessage(`已成功删除 ${result.successCount} 个文件`);
                     selectedAuthFiles.clear();
                     await loadAuthFiles();
                 } else {
                     if (result.error) {
                         showError(result.error);
                     } else {
-                        showError(`Failed to delete ${result.errorCount} file(s)`);
+                        showError(`${result.errorCount} 个文件删除失败`);
                     }
                 }
             } catch (error) {
                 console.error('Error deleting auth files:', error);
-                showError('Network error');
+                showError('网络错误');
             } finally {
                 deleteBtn.disabled = false;
-                deleteBtn.textContent = 'Delete';
+                deleteBtn.textContent = '删除';
                 updateActionButtons();
             }
         }
@@ -183,7 +183,7 @@ function createNewAuthFile(type) {
         'vertex': 'Vertex',
         'iflow': 'iFlow',
         'antigravity': 'Antigravity',
-        'local': 'Local File'
+        'local': '本地文件'
     };
 
     if (type === 'local') {
@@ -206,7 +206,7 @@ function createNewAuthFile(type) {
         startIFlowCookieFlow();
     } else {
         console.log(`Creating new ${typeNames[type]} auth file`);
-        showSuccessMessage(`Creating new ${typeNames[type]} auth file...`);
+        showSuccessMessage(`正在创建 ${typeNames[type]} 认证文件...`);
     }
 }
 
@@ -218,27 +218,27 @@ function showGeminiWebDialog() {
     modal.innerHTML = `
         <div class="modal-content">
             <div class="modal-header">
-                <h3 class="modal-title">Gemini WEB Authentication</h3>
+                <h3 class="modal-title">Gemini WEB 认证</h3>
                 <button class="modal-close" id="gemini-web-modal-close">&times;</button>
             </div>
             <div class="modal-body">
                 <div class="codex-auth-content">
-                    <p>Please enter your Gemini Web cookies:</p>
+                    <p>请输入您的 Gemini Web Cookie：</p>
                     <div class="form-group">
                         <label for="gemini-web-secure-1psid-input">Secure-1PSID:</label>
-                        <input type="text" id="gemini-web-secure-1psid-input" class="form-input" placeholder="Enter Secure-1PSID">
+                        <input type="text" id="gemini-web-secure-1psid-input" class="form-input" placeholder="请输入 Secure-1PSID">
                     </div>
                     <div class="form-group">
                         <label for="gemini-web-secure-1psidts-input">Secure-1PSIDTS:</label>
-                        <input type="text" id="gemini-web-secure-1psidts-input" class="form-input" placeholder="Enter Secure-1PSIDTS">
+                        <input type="text" id="gemini-web-secure-1psidts-input" class="form-input" placeholder="请输入 Secure-1PSIDTS">
                     </div>
                     <div class="form-group">
                         <label for="gemini-web-email-input" style="text-align: left;">Email:</label>
-                        <input type="email" id="gemini-web-email-input" class="form-input" placeholder="Enter your email address">
+                        <input type="email" id="gemini-web-email-input" class="form-input" placeholder="请输入邮箱地址">
                     </div>
                     <div class="auth-actions">
-                        <button type="button" id="gemini-web-confirm-btn" class="btn-primary">Confirm</button>
-                        <button type="button" id="gemini-web-cancel-btn" class="btn-cancel">Cancel</button>
+                        <button type="button" id="gemini-web-confirm-btn" class="btn-primary">确认</button>
+                        <button type="button" id="gemini-web-cancel-btn" class="btn-cancel">取消</button>
                     </div>
                 </div>
             </div>
@@ -277,7 +277,7 @@ async function confirmGeminiWebTokens() {
         const secure1psidts = secure1psidtsInput.value.trim();
 
         if (!email || !secure1psid || !secure1psidts) {
-            showError('Please enter email, Secure-1PSID and Secure-1PSIDTS');
+            showError('请输入邮箱、Secure-1PSID 和 Secure-1PSIDTS');
             return;
         }
 
@@ -287,15 +287,15 @@ async function confirmGeminiWebTokens() {
         const result = await configManager.saveGeminiWebTokens(secure1psid, secure1psidts, email);
 
         if (result.success) {
-            showSuccessMessage('Gemini Web tokens saved successfully');
+            showSuccessMessage('Gemini Web 令牌保存成功');
             // Refresh the auth files list
             await loadAuthFiles();
         } else {
-            showError('Failed to save Gemini Web tokens: ' + (result.error || 'Unknown error'));
+            showError('保存 Gemini Web 令牌失败：' + (result.error || 'Unknown error'));
         }
     } catch (error) {
         console.error('Error saving Gemini Web tokens:', error);
-        showError('Failed to save Gemini Web tokens: ' + error.message);
+        showError('保存 Gemini Web 令牌失败：' + error.message);
     }
 }
 
@@ -316,7 +316,7 @@ function uploadLocalFile() {
         }
         const invalidFiles = files.filter(file => !file.name.toLowerCase().endsWith('.json'));
         if (invalidFiles.length > 0) {
-            showError(`Please select only JSON files. Invalid files: ${invalidFiles.map(f => f.name).join(', ')}`);
+            showError(`请仅选择 JSON 文件。无效文件：${invalidFiles.map(f => f.name).join(', ')}`);
             document.body.removeChild(fileInput);
             return;
         }
@@ -325,7 +325,7 @@ function uploadLocalFile() {
             await loadAuthFiles();
         } catch (error) {
             console.error('Error uploading files:', error);
-            showError('Failed to upload files');
+            showError('上传文件失败');
         } finally {
             document.body.removeChild(fileInput);
         }
@@ -337,12 +337,12 @@ async function uploadFilesToServer(files) {
     try {
         const result = await configManager.uploadAuthFiles(files);
         if (result.success && result.successCount > 0) {
-            showSuccessMessage(`Uploaded ${result.successCount} file(s) successfully`);
+            showSuccessMessage(`已成功上传 ${result.successCount} 个文件`);
         }
         if (result.errorCount > 0) {
             const errorMessage = result.errors && result.errors.length <= 3
-                ? `Failed to upload ${result.errorCount} file(s): ${result.errors.join(', ')}`
-                : `Failed to upload ${result.errorCount} file(s)`;
+                ? `${result.errorCount} 个文件上传失败：${result.errors.join(', ')}`
+                : `${result.errorCount} 个文件上传失败`;
             showError(errorMessage);
         }
         if (result.error) {
@@ -350,7 +350,7 @@ async function uploadFilesToServer(files) {
         }
     } catch (error) {
         console.error('Error uploading files:', error);
-        showError('Failed to upload files');
+        showError('上传文件失败');
     }
 }
 
@@ -363,24 +363,24 @@ async function uploadSingleFile(file, apiUrl, password) {
 async function downloadSelectedAuthFiles() {
     if (selectedAuthFiles.size === 0 || downloadBtn.disabled) return;
     downloadBtn.disabled = true;
-    downloadBtn.textContent = 'Downloading...';
+    downloadBtn.textContent = '下载中...';
     try {
         const result = await configManager.downloadAuthFiles(Array.from(selectedAuthFiles));
         if (result.success && result.successCount > 0) {
-            showSuccessMessage(`Downloaded ${result.successCount} file(s) successfully`);
+            showSuccessMessage(`已成功下载 ${result.successCount} 个文件`);
         }
         if (result.errorCount > 0) {
-            showError(`Failed to download ${result.errorCount} file(s)`);
+            showError(`${result.errorCount} 个文件下载失败`);
         }
         if (result.error) {
             showError(result.error);
         }
     } catch (error) {
         console.error('Error downloading files:', error);
-        showError('Failed to download files');
+        showError('下载文件失败');
     } finally {
         downloadBtn.disabled = false;
-        downloadBtn.textContent = 'Download';
+        downloadBtn.textContent = '下载';
     }
 }
 

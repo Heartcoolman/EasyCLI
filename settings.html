@@ -8,7 +8,7 @@
         content="default-src 'self'; script-src 'self' 'unsafe-inline' tauri:; style-src 'self' 'unsafe-inline'; connect-src 'self' http: https: tauri: ipc:" />
     <meta http-equiv="X-Content-Security-Policy"
         content="default-src 'self'; script-src 'self' 'unsafe-inline' tauri:; style-src 'self' 'unsafe-inline'; connect-src 'self' http: https: tauri: ipc:" />
-    <title>EasyCLI Control Panel</title>
+    <title>EasyCLI 控制面板</title>
     <link rel="stylesheet" href="css/settings.css">
 
     <script src="js/config-manager.js"></script>
@@ -27,20 +27,20 @@
 <body>
     <div class="sidebar">
         <div class="sidebar-header">
-            <h1 class="sidebar-title">EasyCLI Control Panel</h1>
+            <h1 class="sidebar-title">EasyCLI 控制面板</h1>
         </div>
         <div class="tabs-container">
-            <button class="tab active" data-tab="basic">Basic Setting</button>
-            <button class="tab" data-tab="access-token">Access Token</button>
-            <button class="tab" data-tab="auth">Authentication Files</button>
-            <button class="tab" data-tab="api">Third Party API Keys</button>
-            <button class="tab" data-tab="openai">OpenAI Compatibility</button>
+            <button class="tab active" data-tab="basic">基本设置</button>
+            <button class="tab" data-tab="access-token">访问令牌</button>
+            <button class="tab" data-tab="auth">认证文件</button>
+            <button class="tab" data-tab="api">第三方 API 密钥</button>
+            <button class="tab" data-tab="openai">OpenAI 兼容</button>
         </div>
 
         <!-- Server Status Display -->
         <div class="server-status-container">
             <div class="server-status-content">
-                <span class="server-status-text" id="server-status-text">Local</span>
+                <span class="server-status-text" id="server-status-text">本地</span>
             </div>
         </div>
     </div>
@@ -53,8 +53,8 @@
                     <!-- Local Mode Only Settings -->
                     <div class="setting-item local-only" id="port-setting">
                         <div class="setting-label">
-                            <label for="port-input">Port</label>
-                            <span class="setting-description">Server port number (default: 8080)</span>
+                            <label for="port-input">端口</label>
+                            <span class="setting-description">服务器端口号（默认：8080）</span>
                         </div>
                         <div class="setting-control">
                             <input type="number" id="port-input" class="number-input" min="1" max="65535"
@@ -64,8 +64,8 @@
 
                     <div class="setting-item local-only" id="allow-remote-setting">
                         <div class="setting-label">
-                            <label for="allow-remote-switch">Allow Remote Management</label>
-                            <span class="setting-description">Allow remote management access from other hosts</span>
+                            <label for="allow-remote-switch">允许远程管理</label>
+                            <span class="setting-description">允许其他主机远程管理访问</span>
                         </div>
                         <div class="setting-control">
                             <label class="switch">
@@ -77,8 +77,8 @@
 
                     <div class="setting-item local-only" id="auto-start-setting">
                         <div class="setting-label">
-                            <label for="auto-start-switch">Start at Login</label>
-                            <span class="setting-description">Launch EasyCLI automatically when you log in</span>
+                            <label for="auto-start-switch">开机自启</label>
+                            <span class="setting-description">登录时自动启动 EasyCLI</span>
                         </div>
                         <div class="setting-control">
                             <label class="switch">
@@ -90,19 +90,19 @@
 
                     <div class="setting-item local-only" id="secret-key-setting">
                         <div class="setting-label">
-                            <label for="secret-key-input">Remote Management Secret Key</label>
-                            <span class="setting-description">Secret key for remote management authentication</span>
+                            <label for="secret-key-input">远程管理密钥</label>
+                            <span class="setting-description">用于远程管理认证的密钥</span>
                         </div>
                         <div class="setting-control">
                             <input type="password" id="secret-key-input" class="form-input"
-                                placeholder="Enter secret key">
+                                placeholder="请输入密钥">
                         </div>
                     </div>
 
                     <div class="setting-item">
                         <div class="setting-label">
-                            <label for="debug-switch">Debug Mode</label>
-                            <span class="setting-description">Enable debug logging for troubleshooting</span>
+                            <label for="debug-switch">调试模式</label>
+                            <span class="setting-description">启用调试日志以排查问题</span>
                         </div>
                         <div class="setting-control">
                             <label class="switch">
@@ -114,19 +114,18 @@
 
                     <div class="setting-item">
                         <div class="setting-label">
-                            <label for="proxy-url-input">Proxy URL</label>
-                            <span class="setting-description">Configure proxy server URL (e.g.,
-                                socks5://user:pass@127.0.0.1:1080/)</span>
+                            <label for="proxy-url-input">代理地址</label>
+                            <span class="setting-description">配置代理服务器地址（例如：socks5://user:pass@127.0.0.1:1080/）</span>
                         </div>
                         <div class="setting-control">
-                            <input type="text" id="proxy-url-input" class="form-input" placeholder="Enter proxy URL">
+                            <input type="text" id="proxy-url-input" class="form-input" placeholder="请输入代理地址">
                         </div>
                     </div>
 
                     <div class="setting-item">
                         <div class="setting-label">
-                            <label for="request-log-switch">Request Log</label>
-                            <span class="setting-description">Enable request logging for debugging</span>
+                            <label for="request-log-switch">请求日志</label>
+                            <span class="setting-description">启用请求日志以调试</span>
                         </div>
                         <div class="setting-control">
                             <label class="switch">
@@ -138,8 +137,8 @@
 
                     <div class="setting-item">
                         <div class="setting-label">
-                            <label for="request-retry-input">Request Retry</label>
-                            <span class="setting-description">Number of retry attempts for failed requests</span>
+                            <label for="request-retry-input">请求重试</label>
+                            <span class="setting-description">请求失败时的重试次数</span>
                         </div>
                         <div class="setting-control">
                             <input type="number" id="request-retry-input" class="number-input" min="0" placeholder="3">
@@ -149,9 +148,8 @@
 
                     <div class="setting-item">
                         <div class="setting-label">
-                            <label for="switch-project-switch">Switch Project on Quota Exceeded</label>
-                            <span class="setting-description">Automatically switch to another project when quota is
-                                exceeded</span>
+                            <label for="switch-project-switch">配额用尽时切换项目</label>
+                            <span class="setting-description">配额用尽时自动切换到其他项目</span>
                         </div>
                         <div class="setting-control">
                             <label class="switch">
@@ -163,9 +161,8 @@
 
                     <div class="setting-item">
                         <div class="setting-label">
-                            <label for="switch-preview-model-switch">Switch Preview Model on Quota Exceeded</label>
-                            <span class="setting-description">Automatically switch to preview model when quota is
-                                exceeded</span>
+                            <label for="switch-preview-model-switch">配额用尽时切换预览模型</label>
+                            <span class="setting-description">配额用尽时自动切换到预览模型</span>
                         </div>
                         <div class="setting-control">
                             <label class="switch">
@@ -184,13 +181,13 @@
                 <!-- Access Token Section -->
                 <div class="api-section local-only" id="local-api-keys-section">
                     <div class="api-section-header">
-                        <h3 class="api-section-title">Access Token</h3>
-                        <button class="add-key-btn" id="add-local-api-key-btn">Add Key</button>
+                        <h3 class="api-section-title">访问令牌</h3>
+                        <button class="add-key-btn" id="add-local-api-key-btn">添加密钥</button>
                     </div>
                     <div class="api-keys-list" id="local-api-keys-list">
                         <div class="loading-state" id="local-api-keys-loading">
                             <div class="loading-spinner"></div>
-                            <span>Loading access tokens...</span>
+                            <span>正在加载访问令牌...</span>
                         </div>
                     </div>
                 </div>
@@ -198,13 +195,13 @@
                 <!-- Access Token Section -->
                 <div class="api-section remote-only" id="remote-api-keys-section">
                     <div class="api-section-header">
-                        <h3 class="api-section-title">Access Token</h3>
-                        <button class="add-key-btn" id="add-remote-api-key-btn">Add Key</button>
+                        <h3 class="api-section-title">访问令牌</h3>
+                        <button class="add-key-btn" id="add-remote-api-key-btn">添加密钥</button>
                     </div>
                     <div class="api-keys-list" id="remote-api-keys-list">
                         <div class="loading-state" id="remote-api-keys-loading">
                             <div class="loading-spinner"></div>
-                            <span>Loading access tokens...</span>
+                            <span>正在加载访问令牌...</span>
                         </div>
                     </div>
                 </div>
@@ -217,7 +214,7 @@
                 <div class="auth-files-list" id="auth-files-list">
                     <div class="loading-state" id="auth-loading">
                         <div class="loading-spinner"></div>
-                        <span>Loading authentication files...</span>
+                        <span>正在加载认证文件...</span>
                     </div>
                 </div>
             </div>
@@ -229,13 +226,13 @@
                 <!-- Gemini API Keys Section -->
                 <div class="api-section">
                     <div class="api-section-header">
-                        <h3 class="api-section-title">Gemini API Keys</h3>
-                        <button class="add-key-btn" id="add-gemini-key-btn">Add Key</button>
+                        <h3 class="api-section-title">Gemini API 密钥</h3>
+                        <button class="add-key-btn" id="add-gemini-key-btn">添加密钥</button>
                     </div>
                     <div class="api-keys-list" id="gemini-keys-list">
                         <div class="loading-state" id="gemini-loading">
                             <div class="loading-spinner"></div>
-                            <span>Loading Gemini API keys...</span>
+                            <span>正在加载 Gemini API 密钥...</span>
                         </div>
                     </div>
                 </div>
@@ -243,13 +240,13 @@
                 <!-- Codex API Keys Section -->
                 <div class="api-section">
                     <div class="api-section-header">
-                        <h3 class="api-section-title">Codex API Keys</h3>
-                        <button class="add-key-btn" id="add-codex-key-btn">Add Key</button>
+                        <h3 class="api-section-title">Codex API 密钥</h3>
+                        <button class="add-key-btn" id="add-codex-key-btn">添加密钥</button>
                     </div>
                     <div class="api-keys-list" id="codex-keys-list">
                         <div class="loading-state" id="codex-loading">
                             <div class="loading-spinner"></div>
-                            <span>Loading Codex API keys...</span>
+                            <span>正在加载 Codex API 密钥...</span>
                         </div>
                     </div>
                 </div>
@@ -257,13 +254,13 @@
                 <!-- Claude API Keys Section -->
                 <div class="api-section">
                     <div class="api-section-header">
-                        <h3 class="api-section-title">Claude Code API Keys</h3>
-                        <button class="add-key-btn" id="add-claude-key-btn">Add Key</button>
+                        <h3 class="api-section-title">Claude Code API 密钥</h3>
+                        <button class="add-key-btn" id="add-claude-key-btn">添加密钥</button>
                     </div>
                     <div class="api-keys-list" id="claude-keys-list">
                         <div class="loading-state" id="claude-loading">
                             <div class="loading-spinner"></div>
-                            <span>Loading Claude API keys...</span>
+                            <span>正在加载 Claude API 密钥...</span>
                         </div>
                     </div>
                 </div>
@@ -275,13 +272,13 @@
             <div class="openai-compatibility-container">
                 <div class="openai-section">
                     <div class="openai-section-header">
-                        <h3 class="openai-section-title">OpenAI Compatibility Providers</h3>
-                        <button class="add-provider-btn" id="add-provider-btn">Add Provider</button>
+                        <h3 class="openai-section-title">OpenAI 兼容提供商</h3>
+                        <button class="add-provider-btn" id="add-provider-btn">添加提供商</button>
                     </div>
                     <div class="openai-providers-list" id="openai-providers-list">
                         <div class="loading-state" id="openai-loading">
                             <div class="loading-spinner"></div>
-                            <span>Loading OpenAI compatibility providers...</span>
+                            <span>正在加载 OpenAI 兼容提供商...</span>
                         </div>
                     </div>
                 </div>
@@ -295,17 +292,17 @@
     <div class="modal" id="confirm-modal">
         <div class="modal-content confirm-modal-content">
             <div class="modal-header">
-                <h3 class="modal-title" id="confirm-title">Confirm Delete</h3>
+                <h3 class="modal-title" id="confirm-title">确认删除</h3>
                 <button class="modal-close" id="confirm-close">&times;</button>
             </div>
             <div class="modal-body">
                 <div class="confirm-message" id="confirm-message">
-                    Are you sure you want to delete this API key? This action cannot be undone.
+                    确定要删除此 API 密钥吗？此操作不可撤销。
                 </div>
             </div>
             <div class="form-actions">
-                <button type="button" class="btn-cancel" id="confirm-cancel">Cancel</button>
-                <button type="button" class="btn-delete" id="confirm-delete">Delete</button>
+                <button type="button" class="btn-cancel" id="confirm-cancel">取消</button>
+                <button type="button" class="btn-delete" id="confirm-delete">删除</button>
             </div>
         </div>
     </div>
@@ -314,42 +311,42 @@
     <div class="modal" id="api-key-modal">
         <div class="modal-content">
             <div class="modal-header">
-                <h3 class="modal-title" id="modal-title">Add API Key</h3>
+                <h3 class="modal-title" id="modal-title">添加 API 密钥</h3>
                 <button class="modal-close" id="modal-close">&times;</button>
             </div>
             <div class="modal-body">
                 <form id="api-key-form">
                     <div class="form-group">
-                        <label for="api-key-input">API Key <span class="required">*</span></label>
-                        <input type="text" id="api-key-input" class="form-input" placeholder="Enter API key" required>
+                        <label for="api-key-input">API 密钥 <span class="required">*</span></label>
+                        <input type="text" id="api-key-input" class="form-input" placeholder="请输入 API 密钥" required>
                     </div>
                     <div class="form-group" id="base-url-group" style="display: none;">
-                        <label for="base-url-input">Base URL <span class="required">*</span></label>
+                        <label for="base-url-input">基础地址 <span class="required">*</span></label>
                         <input type="url" id="base-url-input" class="form-input" placeholder="https://api.example.com">
                     </div>
                     <div class="form-group" id="proxy-url-group" style="display: none;">
-                        <label for="api-key-proxy-url-input">Proxy URL</label>
+                        <label for="api-key-proxy-url-input">代理地址</label>
                         <input type="text" id="api-key-proxy-url-input" class="form-input"
                             placeholder="socks5://user:pass@host:port">
-                        <small class="form-help">Optional proxy URL for API requests</small>
+                        <small class="form-help">可选的 API 请求代理地址</small>
                     </div>
                     <div class="form-group" id="excluded-models-group" style="display: none;">
-                        <label for="excluded-models-input">Excluded Models</label>
+                        <label for="excluded-models-input">排除模型</label>
                         <input type="text" id="excluded-models-input" class="form-input"
                             placeholder="model-a, model-b">
-                        <small class="form-help">Comma-separated model IDs to exclude</small>
+                        <small class="form-help">以逗号分隔要排除的模型 ID</small>
                     </div>
                     <div class="form-group" id="headers-group" style="display: none;">
-                        <label for="headers-input">Headers (JSON)</label>
+                        <label for="headers-input">请求头（JSON）</label>
                         <textarea id="headers-input" class="form-input" rows="3"
                             placeholder='{ "X-Custom-Header": "value" }'></textarea>
-                        <small class="form-help">Optional request headers in JSON object format</small>
+                        <small class="form-help">可选的 JSON 格式请求头</small>
                     </div>
                 </form>
             </div>
             <div class="form-actions">
-                <button type="button" class="btn-cancel" id="modal-cancel">Cancel</button>
-                <button type="submit" class="btn-save" id="modal-save">Save</button>
+                <button type="button" class="btn-cancel" id="modal-cancel">取消</button>
+                <button type="submit" class="btn-save" id="modal-save">保存</button>
             </div>
         </div>
     </div>
@@ -358,21 +355,21 @@
     <div class="modal" id="access-token-modal">
         <div class="modal-content">
             <div class="modal-header">
-                <h3 class="modal-title" id="access-token-modal-title">Add Access Token</h3>
+                <h3 class="modal-title" id="access-token-modal-title">添加访问令牌</h3>
                 <button class="modal-close" id="access-token-modal-close">&times;</button>
             </div>
             <div class="modal-body">
                 <form id="access-token-form">
                     <div class="form-group">
-                        <label for="access-token-input">Access Token <span class="required">*</span></label>
-                        <input type="text" id="access-token-input" class="form-input" placeholder="Enter access token"
+                        <label for="access-token-input">访问令牌 <span class="required">*</span></label>
+                        <input type="text" id="access-token-input" class="form-input" placeholder="请输入访问令牌"
                             required>
                     </div>
                 </form>
             </div>
             <div class="form-actions">
-                <button type="button" class="btn-cancel" id="access-token-modal-cancel">Cancel</button>
-                <button type="submit" class="btn-save" id="access-token-modal-save">Save</button>
+                <button type="button" class="btn-cancel" id="access-token-modal-cancel">取消</button>
+                <button type="submit" class="btn-save" id="access-token-modal-save">保存</button>
             </div>
         </div>
     </div>
@@ -381,58 +378,57 @@
     <div class="modal" id="openai-provider-modal">
         <div class="modal-content">
             <div class="modal-header">
-                <h3 class="modal-title" id="provider-modal-title">Add Provider</h3>
+                <h3 class="modal-title" id="provider-modal-title">添加提供商</h3>
                 <button class="modal-close" id="provider-modal-close">&times;</button>
             </div>
             <div class="modal-body">
                 <form id="openai-provider-form">
                     <div class="form-group">
-                        <label for="provider-name-input">Provider Name <span class="required">*</span></label>
+                        <label for="provider-name-input">提供商名称 <span class="required">*</span></label>
                         <input type="text" id="provider-name-input" class="form-input" placeholder="e.g., openrouter"
                             required>
                     </div>
                     <div class="form-group">
-                        <label for="provider-base-url-input">Base URL <span class="required">*</span></label>
+                        <label for="provider-base-url-input">基础地址 <span class="required">*</span></label>
                         <input type="url" id="provider-base-url-input" class="form-input"
                             placeholder="https://api.example.com/v1" required>
                     </div>
                     <div class="form-group">
-                        <label>API Keys <span class="required">*</span></label>
+                        <label>API 密钥 <span class="required">*</span></label>
                         <div id="api-keys-container" class="dynamic-input-container">
                             <div class="dynamic-input-row">
-                                <input type="text" class="form-input dynamic-input" placeholder="Enter API key"
+                                <input type="text" class="form-input dynamic-input" placeholder="请输入 API 密钥"
                                     required>
-                                <input type="text" class="form-input dynamic-input" placeholder="Proxy URL (optional)">
+                                <input type="text" class="form-input dynamic-input" placeholder="代理地址（可选）">
                                 <button type="button" class="add-row-btn" onclick="addApiKeyRow()">+</button>
                                 <button type="button" class="remove-row-btn"
                                     onclick="removeApiKeyRow(this.parentElement)">−</button>
                             </div>
                         </div>
-                        <small class="form-help">Enter API key and optional proxy URL per row</small>
+                        <small class="form-help">每行输入 API 密钥和可选的代理地址</small>
                     </div>
                     <div class="form-group">
-                        <label>Models</label>
+                        <label>模型</label>
                         <div id="models-container" class="dynamic-input-container">
                             <div class="dynamic-input-row">
-                                <input type="text" class="form-input dynamic-input" placeholder="Model name">
-                                <input type="text" class="form-input dynamic-input" placeholder="Alias name">
+                                <input type="text" class="form-input dynamic-input" placeholder="模型名称">
+                                <input type="text" class="form-input dynamic-input" placeholder="别名">
                                 <button type="button" class="add-row-btn" onclick="addModelRow()">+</button>
                                 <button type="button" class="remove-row-btn"
                                     onclick="removeModelRow(this.parentElement)">−</button>
                             </div>
                         </div>
-                        <small class="form-help">Enter model name and alias name. Leave empty if no custom
-                            models.</small>
+                        <small class="form-help">输入模型名称和别名，无自定义模型则留空。</small>
                     </div>
                     <div class="form-group">
-                        <label for="provider-headers-input">Headers (JSON)</label>
+                        <label for="provider-headers-input">请求头（JSON）</label>
                         <textarea id="provider-headers-input" class="form-input" rows="3"
                             placeholder='{ "X-Provider": "openrouter" }'></textarea>
-                        <small class="form-help">Optional request headers in JSON object format</small>
+                        <small class="form-help">可选的 JSON 格式请求头</small>
                     </div>
                     <div class="form-actions">
-                        <button type="button" class="btn-cancel" id="provider-modal-cancel">Cancel</button>
-                        <button type="submit" class="btn-save" id="provider-modal-save">Save</button>
+                        <button type="button" class="btn-cancel" id="provider-modal-cancel">取消</button>
+                        <button type="submit" class="btn-save" id="provider-modal-save">保存</button>
                     </div>
                 </form>
             </div>
@@ -441,13 +437,13 @@
 
     <div class="action-bar">
         <div class="action-bar-left">
-            <button class="select-all-btn" id="select-all-btn" style="display: none;">Select All</button>
+            <button class="select-all-btn" id="select-all-btn" style="display: none;">全选</button>
         </div>
         <div class="action-bar-right">
-            <button class="reset-btn" id="reset-btn">Reset</button>
-            <button class="apply-btn" id="apply-btn">Apply</button>
+            <button class="reset-btn" id="reset-btn">重置</button>
+            <button class="apply-btn" id="apply-btn">应用</button>
             <div class="dropdown-container" id="new-dropdown" style="display: none;">
-                <button class="new-btn" id="new-btn">New</button>
+                <button class="new-btn" id="new-btn">新建</button>
                 <div class="dropdown-menu" id="dropdown-menu">
                     <div class="dropdown-item" data-type="gemini">Gemini CLI</div>
                     <div class="dropdown-item" data-type="gemini-web" style="display: none;">Gemini WEB</div>
@@ -457,11 +453,11 @@
                     <div class="dropdown-item" data-type="vertex">Vertex</div>
                     <div class="dropdown-item" data-type="iflow">iFlow</div>
                     <div class="dropdown-item" data-type="antigravity">Antigravity</div>
-                    <div class="dropdown-item" data-type="local">Local File</div>
+                    <div class="dropdown-item" data-type="local">本地文件</div>
                 </div>
             </div>
-            <button class="download-btn" id="download-btn" style="display: none;">Download</button>
-            <button class="delete-btn" id="delete-btn" style="display: none;">Delete</button>
+            <button class="download-btn" id="download-btn" style="display: none;">下载</button>
+            <button class="delete-btn" id="delete-btn" style="display: none;">删除</button>
         </div>
     </div>
 

@@ -957,7 +957,7 @@ fn start_monitor(app: tauri::AppHandle) {
                 } else {
                     let _ = app.emit(
                         "process-closed",
-                        json!({"message": "CLIProxyAPI process has closed"}),
+                        json!({"message": "CLIProxyAPI 进程已关闭"}),
                     );
                 }
                 // Remove tray icon when process exits
@@ -1366,8 +1366,8 @@ fn create_tray(app: &tauri::AppHandle) -> tauri::Result<()> {
         return Ok(());
     }
 
-    let open_settings = MenuItemBuilder::with_id("open_settings", "Open Settings").build(app)?;
-    let quit = MenuItemBuilder::with_id("quit", "Quit").build(app)?;
+    let open_settings = MenuItemBuilder::with_id("open_settings", "打开设置").build(app)?;
+    let quit = MenuItemBuilder::with_id("quit", "退出").build(app)?;
     let menu = MenuBuilder::new(app)
         .items(&[&open_settings, &quit])
         .build()?;
@@ -1623,7 +1623,7 @@ fn open_settings_window(app: tauri::AppHandle) -> Result<(), String> {
     // Otherwise create it and show
     let url = WebviewUrl::App("settings.html".into());
     let win = WebviewWindowBuilder::new(&app, "settings", url)
-        .title("EasyCLI Control Panel")
+        .title("EasyCLI 控制面板")
         .inner_size(930.0, 600.0)
         .resizable(false)
         .build()
@@ -1964,7 +1964,7 @@ fn save_files_to_directory(files: Vec<SaveFile>) -> Result<serde_json::Value, St
     }
     // Show a system directory picker to choose the destination folder
     let folder = FileDialog::new()
-        .set_title("Choose save directory")
+        .set_title("选择保存目录")
         .pick_folder()
         .ok_or_else(|| "User cancelled directory selection".to_string())?;
 

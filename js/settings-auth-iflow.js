@@ -11,20 +11,20 @@ function showIFlowCookieDialog() {
     modal.innerHTML = `
         <div class="modal-content">
             <div class="modal-header">
-                <h3 class="modal-title">iFlow Cookie Import</h3>
+                <h3 class="modal-title">iFlow Cookie 导入</h3>
                 <button class="modal-close" id="iflow-cookie-modal-close">&times;</button>
             </div>
             <div class="modal-body">
                 <div class="codex-auth-content">
-                    <p>Paste your iFlow cookie to save it as an authentication file.</p>
+                    <p>粘贴您的 iFlow Cookie 以保存为认证文件。</p>
                     <div class="form-group">
                         <label for="iflow-cookie-input">Cookie <span class="required">*</span></label>
-                        <textarea id="iflow-cookie-input" class="form-input" rows="4" placeholder="Paste iFlow cookie here"></textarea>
-                        <small class="form-help">Cookie is required and must not be empty.</small>
+                        <textarea id="iflow-cookie-input" class="form-input" rows="4" placeholder="在此粘贴 iFlow Cookie"></textarea>
+                        <small class="form-help">Cookie 不能为空。</small>
                     </div>
                     <div class="auth-actions">
-                        <button type="button" id="iflow-cookie-save-btn" class="btn-primary">Save</button>
-                        <button type="button" id="iflow-cookie-cancel-btn" class="btn-cancel">Cancel</button>
+                        <button type="button" id="iflow-cookie-save-btn" class="btn-primary">保存</button>
+                        <button type="button" id="iflow-cookie-cancel-btn" class="btn-cancel">取消</button>
                     </div>
                 </div>
             </div>
@@ -45,30 +45,30 @@ async function handleIFlowCookieSubmit(inputEl, saveBtn) {
     try {
         const cookie = inputEl && inputEl.value ? inputEl.value.trim() : '';
         if (!cookie) {
-            showError('Please enter iFlow cookie');
+            showError('请输入 iFlow Cookie');
             return;
         }
         saveBtn.disabled = true;
-        saveBtn.textContent = 'Saving...';
+        saveBtn.textContent = '保存中...';
 
         const result = await configManager.saveIFlowCookie(cookie);
         if (result && result.success) {
             const emailLabel = result.data?.email ? result.data.email : '';
-            showSuccessMessage(`iFlow cookie saved${emailLabel ? ` for ${emailLabel}` : ''}`);
+            showSuccessMessage(`iFlow Cookie 已保存${emailLabel ? `（${emailLabel}）` : ''}`);
             closeIFlowCookieDialog();
             if (typeof loadAuthFiles === 'function') {
                 await loadAuthFiles();
             }
         } else {
-            showError(result?.error || 'Failed to save iFlow cookie');
+            showError(result?.error || '保存 iFlow Cookie 失败');
         }
     } catch (error) {
         console.error('Error saving iFlow cookie:', error);
-        showError('Failed to save iFlow cookie: ' + error.message);
+        showError('保存 iFlow Cookie 失败：' + error.message);
     } finally {
         if (saveBtn) {
             saveBtn.disabled = false;
-            saveBtn.textContent = 'Save';
+            saveBtn.textContent = '保存';
         }
     }
 }
@@ -108,7 +108,7 @@ async function startIFlowAuthFlow() {
     } catch (error) {
         console.error('Error starting iFlow auth flow:', error);
         const msg = (error && (error.message || String(error))) || 'Unknown error';
-        showError('Failed to start iFlow authentication flow: ' + msg);
+        showError('启动 iFlow 认证流程失败：' + msg);
         if (iflowLocalServer) {
             await stopIFlowLocalServer();
         }
@@ -162,7 +162,7 @@ async function handleIFlowCallback(req, res) {
         console.log('Redirecting to:', redirectUrl);
         res.writeHead(302, { 'Location': redirectUrl });
         res.end();
-        setTimeout(async () => { await stopIFlowLocalServer(); showSuccessMessage('iFlow authentication completed!'); }, 1000);
+        setTimeout(async () => { await stopIFlowLocalServer(); showSuccessMessage('iFlow 认证完成！'); }, 1000);
     } catch (error) {
         console.error('Error handling iFlow callback:', error);
         res.writeHead(500, { 'Content-Type': 'text/plain' });
@@ -213,23 +213,23 @@ function showIFlowAuthDialog() {
     modal.innerHTML = `
         <div class="modal-content">
             <div class="modal-header">
-                <h3 class="modal-title">iFlow Authentication</h3>
+                <h3 class="modal-title">iFlow 认证</h3>
                 <button class="modal-close" id="iflow-modal-close">&times;</button>
             </div>
             <div class="modal-body">
                 <div class="iflow-auth-content">
-                    <p>Please copy the link below and open it in your browser, or click the "Open Link" button directly:</p>
+                    <p>请复制以下链接并在浏览器中打开，或直接点击"打开链接"按钮：</p>
                     <div class="auth-url-container">
                         <input type="text" id="iflow-auth-url-input" class="form-input" value="${iflowAuthUrl}" readonly>
-                        <button type="button" id="iflow-copy-btn" class="copy-btn">Copy Link</button>
+                        <button type="button" id="iflow-copy-btn" class="copy-btn">复制链接</button>
                     </div>
                     <div class="auth-status" id="iflow-auth-status" style="display: none;">
-                        <div class="auth-status-text">Waiting for authentication to complete...</div>
+                        <div class="auth-status-text">等待认证完成...</div>
                         <div class="auth-status-spinner"></div>
                     </div>
                     <div class="auth-actions">
-                        <button type="button" id="iflow-open-btn" class="btn-primary">Open Link</button>
-                        <button type="button" id="iflow-cancel-btn" class="btn-cancel">Cancel</button>
+                        <button type="button" id="iflow-open-btn" class="btn-primary">打开链接</button>
+                        <button type="button" id="iflow-cancel-btn" class="btn-cancel">取消</button>
                     </div>
                 </div>
             </div>
@@ -249,22 +249,22 @@ function showIFlowAuthDialog() {
 }
 
 async function copyIFlowUrl() {
-    try { await navigator.clipboard.writeText(iflowAuthUrl); showSuccessMessage('Link copied to clipboard'); }
-    catch (error) { console.error('Error copying iFlow URL:', error); showError('Failed to copy link: ' + error.message); }
+    try { await navigator.clipboard.writeText(iflowAuthUrl); showSuccessMessage('链接已复制到剪贴板'); }
+    catch (error) { console.error('Error copying iFlow URL:', error); showError('复制链接失败：' + error.message); }
 }
 
 function openIFlowUrl() {
     try {
         if (window.__TAURI__?.shell?.open) { window.__TAURI__.shell.open(iflowAuthUrl); }
         else { window.open(iflowAuthUrl, '_blank'); }
-        showSuccessMessage('Authentication link opened in browser');
+        showSuccessMessage('认证链接已在浏览器中打开');
 
         // Show polling status
         const statusDiv = document.getElementById('iflow-auth-status');
         if (statusDiv) {
             statusDiv.style.display = 'block';
         }
-    } catch (error) { console.error('Error opening iFlow URL:', error); showError('Failed to open link: ' + error.message); }
+    } catch (error) { console.error('Error opening iFlow URL:', error); showError('打开链接失败：' + error.message); }
 }
 
 // Start iFlow authentication status polling
@@ -281,7 +281,7 @@ async function startIFlowAuthPolling() {
             () => {
                 // Authentication successful
                 console.log('iFlow Authentication successful');
-                showSuccessMessage('iFlow authentication completed!');
+                showSuccessMessage('iFlow 认证完成！');
                 cancelIFlowAuth();
                 // Refresh auth files list
                 if (typeof loadAuthFiles === 'function') {
@@ -291,13 +291,13 @@ async function startIFlowAuthPolling() {
             (error) => {
                 // Authentication failed
                 console.error('iFlow Authentication failed:', error);
-                showError('iFlow Authentication failed: ' + error);
+                showError('iFlow 认证失败：' + error);
                 cancelIFlowAuth();
             }
         );
     } catch (error) {
         console.error('iFlow Authentication polling error:', error);
-        showError('Error occurred during iFlow Authentication: ' + error.message);
+        showError('iFlow 认证过程中出错：' + error.message);
         cancelIFlowAuth();
     }
 }
@@ -426,7 +426,7 @@ async function pollIFlowAuthStatus(authType, state, onSuccess, onError) {
                 iflowAbortController.abort();
                 iflowAbortController = null;
             }
-            onError('Authentication timeout, please try again');
+            onError('认证超时，请重试');
             reject(new Error('Authentication timeout'));
         }, 300000);
     });

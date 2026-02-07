@@ -28,7 +28,7 @@ async function loadOpenaiProviders() {
         renderOpenaiProviders();
     } catch (error) {
         console.error('Error loading OpenAI providers:', error);
-        showError('Failed to load OpenAI providers');
+        showError('加载 OpenAI 提供商失败');
         renderOpenaiProviders();
     }
 }
@@ -42,8 +42,8 @@ function renderOpenaiProviders() {
         list.innerHTML = `
             <div class="empty-state">
                 <div class="empty-state-icon">🤖</div>
-                <div class="empty-state-text">No OpenAI Compatibility Providers</div>
-                <div class="empty-state-subtitle">Add your first provider to get started</div>
+                <div class="empty-state-text">暂无 OpenAI 兼容提供商</div>
+                <div class="empty-state-subtitle">添加您的第一个提供商</div>
             </div>
         `;
         return;
@@ -61,17 +61,17 @@ function renderOpenaiProviders() {
             <div class="openai-provider-base-url">${provider['base-url']}</div>
             <div class="openai-provider-details">
                 <div class="openai-provider-detail">
-                    <strong>${apiKeysCount}</strong> API Key${apiKeysCount !== 1 ? 's' : ''}
+                    <strong>${apiKeysCount}</strong> 个 API 密钥
                 </div>
                 <div class="openai-provider-detail">
-                    <strong>${modelsCount}</strong> Model${modelsCount !== 1 ? 's' : ''}
+                    <strong>${modelsCount}</strong> 个模型
                 </div>
-                ${headersText ? `<div class="openai-provider-detail">Headers: ${headersText}</div>` : ''}
+                ${headersText ? `<div class="openai-provider-detail">请求头：${headersText}</div>` : ''}
             </div>
         </div>
             <div class="openai-provider-actions">
-                <button class="openai-provider-btn edit" onclick="editOpenaiProvider(${index})">Edit</button>
-                <button class="openai-provider-btn delete" onclick="deleteOpenaiProvider(${index})">Delete</button>
+                <button class="openai-provider-btn edit" onclick="editOpenaiProvider(${index})">编辑</button>
+                <button class="openai-provider-btn delete" onclick="deleteOpenaiProvider(${index})">删除</button>
             </div>
         `;
         list.appendChild(providerItem);
@@ -80,7 +80,7 @@ function renderOpenaiProviders() {
 
 function showOpenaiProviderModal(editIndex = null) {
     currentProviderEditIndex = editIndex;
-    providerModalTitle.textContent = editIndex !== null ? 'Edit Provider' : 'Add Provider';
+    providerModalTitle.textContent = editIndex !== null ? '编辑提供商' : '添加提供商';
     providerNameInput.value = '';
     providerBaseUrlInput.value = '';
     providerHeadersInput.value = '';
@@ -109,23 +109,23 @@ function saveOpenaiProvider() {
     const baseUrl = providerBaseUrlInput.value.trim();
     const currentTab = document.querySelector('.tab.active').getAttribute('data-tab');
     if (currentTab !== 'openai') {
-        showError('Please switch to OpenAI Compatibility tab to manage providers');
+        showError('请切换到 OpenAI 兼容标签页管理提供商');
         return;
     }
     clearProviderFormErrors();
     let hasErrors = false;
     if (!name) {
-        showProviderFieldError(providerNameInput, 'Please fill in this field');
+        showProviderFieldError(providerNameInput, '请填写此字段');
         hasErrors = true;
     }
     if (!baseUrl) {
-        showProviderFieldError(providerBaseUrlInput, 'Please fill in this field');
+        showProviderFieldError(providerBaseUrlInput, '请填写此字段');
         hasErrors = true;
     }
     const { apiKeys, models } = getDynamicInputData();
     if (apiKeys.length === 0) {
         const firstApiKeyInput = apiKeysContainer.querySelector('.dynamic-input:first-child');
-        if (firstApiKeyInput) showProviderFieldError(firstApiKeyInput, 'Please fill in this field');
+        if (firstApiKeyInput) showProviderFieldError(firstApiKeyInput, '请填写此字段');
         hasErrors = true;
     }
     if (!hasErrors && apiKeys.length > 0) {
@@ -136,7 +136,7 @@ function saveOpenaiProvider() {
                 const apiKeyRows = apiKeysContainer.querySelectorAll('.dynamic-input-row');
                 if (apiKeyRows[i]) {
                     const apiKeyInput = apiKeyRows[i].querySelector('.dynamic-input:first-child');
-                    if (apiKeyInput) showProviderFieldError(apiKeyInput, 'This API key already exists');
+                    if (apiKeyInput) showProviderFieldError(apiKeyInput, '此 API 密钥已存在');
                 }
                 hasErrors = true;
                 break;
@@ -151,7 +151,7 @@ function saveOpenaiProvider() {
                 const modelRows = modelsContainer.querySelectorAll('.dynamic-input-row');
                 if (modelRows[i]) {
                     const aliasInput = modelRows[i].querySelector('.dynamic-input:nth-child(2)');
-                    if (aliasInput) showProviderFieldError(aliasInput, 'This alias name already exists');
+                    if (aliasInput) showProviderFieldError(aliasInput, '此别名已存在');
                 }
                 hasErrors = true;
                 break;
@@ -163,20 +163,20 @@ function saveOpenaiProvider() {
         try {
             const parsed = JSON.parse(providerHeadersInput.value.trim());
             if (parsed === null || typeof parsed !== 'object' || Array.isArray(parsed)) {
-                showProviderFieldError(providerHeadersInput, 'Headers must be a JSON object');
+                showProviderFieldError(providerHeadersInput, '请求头必须是 JSON 对象');
                 hasErrors = true;
             } else {
                 headersObj = parsed;
             }
         } catch (e) {
-            showProviderFieldError(providerHeadersInput, 'Headers must be valid JSON');
+            showProviderFieldError(providerHeadersInput, '请求头必须是有效的 JSON');
             hasErrors = true;
         }
     }
     if (!hasErrors) {
         const isDuplicate = openaiProviders.some((provider, index) => index !== currentProviderEditIndex && provider.name === name);
         if (isDuplicate) {
-            showProviderFieldError(providerNameInput, 'This provider name already exists');
+            showProviderFieldError(providerNameInput, '此提供商名称已存在');
             hasErrors = true;
         }
     }
@@ -197,8 +197,8 @@ function saveOpenaiProvider() {
 function editOpenaiProvider(index) { showOpenaiProviderModal(index); }
 function deleteOpenaiProvider(index) {
     showConfirmDialog(
-        'Confirm Delete',
-        'Are you sure you want to delete this OpenAI compatibility provider? This action cannot be undone.',
+        '确认删除',
+        '确定要删除此 OpenAI 兼容提供商吗？此操作不可撤销。',
         () => { openaiProviders.splice(index, 1); renderOpenaiProviders(); }
     );
 }
@@ -228,13 +228,13 @@ function addApiKeyRow() {
     const apiKeyInput = document.createElement('input');
     apiKeyInput.type = 'text';
     apiKeyInput.className = 'form-input dynamic-input';
-    apiKeyInput.placeholder = 'Enter API key';
+    apiKeyInput.placeholder = '请输入 API 密钥';
     apiKeyInput.required = true;
 
     const proxyUrlInput = document.createElement('input');
     proxyUrlInput.type = 'text';
     proxyUrlInput.className = 'form-input dynamic-input';
-    proxyUrlInput.placeholder = 'Proxy URL (optional)';
+    proxyUrlInput.placeholder = '代理地址（可选）';
 
     const addBtn = document.createElement('button');
     addBtn.type = 'button';
@@ -273,11 +273,11 @@ function addModelRow() {
     const modelNameInput = document.createElement('input');
     modelNameInput.type = 'text';
     modelNameInput.className = 'form-input dynamic-input';
-    modelNameInput.placeholder = 'Model name';
+    modelNameInput.placeholder = '模型名称';
     const aliasInput = document.createElement('input');
     aliasInput.type = 'text';
     aliasInput.className = 'form-input dynamic-input';
-    aliasInput.placeholder = 'Alias name';
+    aliasInput.placeholder = '别名';
     const addBtn = document.createElement('button');
     addBtn.type = 'button';
     addBtn.className = 'add-row-btn';
@@ -327,14 +327,14 @@ function populateDynamicInputs(apiKeys, models) {
             const apiKeyInput = document.createElement('input');
             apiKeyInput.type = 'text';
             apiKeyInput.className = 'form-input dynamic-input';
-            apiKeyInput.placeholder = 'Enter API key';
+            apiKeyInput.placeholder = '请输入 API 密钥';
             apiKeyInput.required = true;
             apiKeyInput.value = apiKeyEntry['api-key'] || '';
 
             const proxyUrlInput = document.createElement('input');
             proxyUrlInput.type = 'text';
             proxyUrlInput.className = 'form-input dynamic-input';
-            proxyUrlInput.placeholder = 'Proxy URL (optional)';
+            proxyUrlInput.placeholder = '代理地址（可选）';
             proxyUrlInput.value = apiKeyEntry['proxy-url'] || '';
 
             const addBtn = document.createElement('button');
@@ -368,13 +368,13 @@ function populateDynamicInputs(apiKeys, models) {
             const modelNameInput = document.createElement('input');
             modelNameInput.type = 'text';
             modelNameInput.className = 'form-input dynamic-input';
-            modelNameInput.placeholder = 'Model name';
+            modelNameInput.placeholder = '模型名称';
             modelNameInput.value = model.name || '';
 
             const aliasInput = document.createElement('input');
             aliasInput.type = 'text';
             aliasInput.className = 'form-input dynamic-input';
-            aliasInput.placeholder = 'Alias name';
+            aliasInput.placeholder = '别名';
             aliasInput.value = model.alias || '';
 
             const addBtn = document.createElement('button');
